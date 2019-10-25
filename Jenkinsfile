@@ -1,26 +1,12 @@
 pipeline {
-  agent any
-    
-  tools {nodejs "node"}
-    
-  stages {
-        
-    stage('Cloning Git') {
-      steps {
-        git 'https://github.com/dhinakaran-nithra/backend'
-      }
+    agent { docker { image 'node:6.3' } }
+    stages {
+        stage('build') {
+            steps {
+                sh 'npm --version'
+		sh 'npm install'
+		sh 'node nithraPost.js'
+            }
+        }
     }
-        
-    stage('Install dependencies') {
-      steps {
-        sh 'npm install'
-      }
-    }
-     
-    stage('Test') {
-      steps {
-         sh 'node nithraPost.js'
-      }
-    }      
-  }
 }
